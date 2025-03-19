@@ -37,3 +37,6 @@ yarn-error.log*
 dist
 dist-ssr
 *.local
+word-454205-4e136aa91dc4.json
+firebase_credentials.json
+words.txt

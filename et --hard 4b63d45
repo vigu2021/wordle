@@ -1,6 +1,0 @@
-[33m4b63d45[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m Added stying to the page
-[33m08545af[m Fixed bug where if not in word list triggers an error
-[33m5cb5c4c[m Databse connection works!
-[33m0301711[m Added words to firestore
-[33m90cb46c[m front-end for app has been setup
-[33m4c235eb[m Initialised initial repo with backend set up, now setting up front end

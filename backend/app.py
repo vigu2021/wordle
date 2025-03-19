@@ -15,14 +15,21 @@ def load_words_from_textfile(file_path):
 
 
 
-def load_words_into_memory(collection_name):
-    collection_ref = db.collection(collection_name)
-    docs = list(collection_ref.stream())  # Fetch all words once
-    words = [doc.id for doc in docs]  # Store document IDs as words
-    return words
+
+def load_words_firestore_to_memory(collection_name="5-letter-words", document_name="5-letter-words.json"):
+    doc_ref = db.collection(collection_name).document(document_name)
+    doc = doc_ref.get()
+
+    if doc.exists:
+        words = doc.to_dict().get("words", [])  # Extract words list from the document
+        return words
+    else:
+        print(f"❌ Document '{document_name}' not found in collection '{collection_name}'.")
+        return []
 
 # Store words in memory
-words = load_words_from_textfile("word_database/words.txt")
+words = load_words_firestore_to_memory()
+
 
 # Function to fetch a random word from memory
 def get_random_word():
@@ -90,7 +97,6 @@ def home():
         ]
     })
 
-# For testing purposes - remove in production
 @app.route('/api/word', methods=['GET'])
 def get_word():
     return jsonify({"word": current_word})

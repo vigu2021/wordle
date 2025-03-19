@@ -121,32 +121,34 @@ function App() {
   }, [currentGuess, gameStatus])
 
   return (
-    <div className="app-container">
-      <header className="app-header">
-        <h1>Wordle Clone</h1>
-        {(gameStatus === 'won' || gameStatus === 'lost') && (
-          <button className="new-game-btn" onClick={startNewGame}>
-            New Game
-          </button>
-        )}
-      </header>
+    <>
+      {/* New Game button outside the container, always visible */}
+      <button className="new-game-btn" onClick={startNewGame}>
+        New Game
+      </button>
       
-      {message && <Message text={message.text} type={message.type} />}
-      
-      <main className="game-container">
-        <GameBoard 
-          guesses={guesses} 
-          currentGuess={currentGuess} 
-          maxAttempts={MAX_ATTEMPTS}
-          wordLength={WORD_LENGTH}
-        />
+      <div className="app-container">
+        <header className="app-header">
+          <h1>Wordle Clone</h1>
+        </header>
         
-        <Keyboard 
-          onKeyPress={handleKeyPress} 
-          keyboardStatus={keyboardStatus}
-        />
-      </main>
-    </div>
+        {message && <Message text={message.text} type={message.type} />}
+        
+        <main className="game-container">
+          <GameBoard 
+            guesses={guesses} 
+            currentGuess={currentGuess} 
+            maxAttempts={MAX_ATTEMPTS}
+            wordLength={WORD_LENGTH}
+          />
+          
+          <Keyboard 
+            onKeyPress={handleKeyPress} 
+            keyboardStatus={keyboardStatus}
+          />
+        </main>
+      </div>
+    </>
   )
 }
 

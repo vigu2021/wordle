@@ -14,3 +14,7 @@ def upload_words_from_file(file_path):
 
 if __name__ == "__main__":
     upload_words_from_file("words.txt")
+
+
+
+

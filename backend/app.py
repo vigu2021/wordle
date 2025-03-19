@@ -8,6 +8,13 @@ CORS(app)  # Enable CORS for all routes
 
 
 # Load words into memory (1 read per 500 words)
+def load_words_from_textfile(file_path):
+    with open(file_path, "r", encoding="utf-8") as file:
+        words = file.read().splitlines()  # Read words line by line
+    return words
+
+
+
 def load_words_into_memory(collection_name):
     collection_ref = db.collection(collection_name)
     docs = list(collection_ref.stream())  # Fetch all words once
@@ -15,7 +22,7 @@ def load_words_into_memory(collection_name):
     return words
 
 # Store words in memory
-words = load_words_into_memory("5-letter-words")
+words = load_words_from_textfile("word_database/words.txt")
 
 # Function to fetch a random word from memory
 def get_random_word():

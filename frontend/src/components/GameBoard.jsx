@@ -1,4 +1,4 @@
-const GameBoard = ({ guesses, currentGuess, maxAttempts, wordLength }) => {
+const GameBoard = ({ guesses, currentGuess, maxAttempts, wordLength, gameStatus }) => {
   // Render a submitted guess row with letter status
   const renderGuessRow = (guess) => {
     return (
@@ -47,21 +47,30 @@ const GameBoard = ({ guesses, currentGuess, maxAttempts, wordLength }) => {
   };
 
   return (
-    <div className="game-board">
-      {/* Render submitted guesses */}
-      {guesses.map((guess, i) => (
-        <div key={`guess-${i}`}>{renderGuessRow(guess)}</div>
-      ))}
+    <div className="game-board-container">
+      <div className="game-board">
+        {/* Render submitted guesses */}
+        {guesses.map((guess, i) => (
+          <div key={`guess-${i}`}>{renderGuessRow(guess)}</div>
+        ))}
+        
+        {/* Render current guess if game is still active */}
+        {gameStatus === 'playing' && guesses.length < maxAttempts && (
+          <div key="current">{renderCurrentRow()}</div>
+        )}
+        
+        {/* Render empty rows for remaining attempts */}
+        {Array(Math.max(0, maxAttempts - guesses.length - (gameStatus === 'playing' ? 1 : 0))).fill().map((_, i) => (
+          <div key={`empty-${i}`}>{renderEmptyRow()}</div>
+        ))}
+      </div>
       
-      {/* Render current guess if game is still active */}
-      {guesses.length < maxAttempts && (
-        <div key="current">{renderCurrentRow()}</div>
+      {/* Game over overlay */}
+      {gameStatus === 'lost' && (
+        <div className="game-over-overlay">
+          <div className="game-over-message">Game Over</div>
+        </div>
       )}
-      
-      {/* Render empty rows for remaining attempts */}
-      {Array(maxAttempts - guesses.length - 1).fill().map((_, i) => (
-        <div key={`empty-${i}`}>{renderEmptyRow()}</div>
-      ))}
     </div>
   );
 };

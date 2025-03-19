@@ -1,0 +1,139 @@
+.timer-container {
+    position: fixed;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: linear-gradient(to right, var(--color-primary), var(--color-secondary));
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: var(--shadow-lg);
+    text-align: center;
+    min-width: 100px;
+    z-index: 50;
+    transition: all 0.3s ease;
+  }
+  
+  .timer {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    font-family: var(--font-display);
+  }
+  
+  .limit-indicator {
+    font-size: 20px;
+    opacity: 0.8;
+  }
+  
+  .timer-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .toggle-btn, .timer-btn {
+    background: rgba(255, 255, 255, 0.3);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s;
+    font-weight: 600;
+  }
+  
+  .toggle-btn:hover, .timer-btn:hover {
+    background: rgba(255, 255, 255, 0.4);
+  }
+  
+  .timer-btn.clear {
+    background: rgba(239, 68, 68, 0.4);
+  }
+  
+  .timer-btn.clear:hover {
+    background: rgba(239, 68, 68, 0.6);
+  }
+  
+  .timer-btn.small {
+    padding: 3px 8px;
+    font-size: 12px;
+  }
+  
+  .limit-input-container {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .limit-input {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: white;
+    padding: 5px;
+    border-radius: 4px;
+    width: 80px;
+    text-align: center;
+    font-weight: 600;
+  }
+  
+  .limit-input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .hide {
+    opacity: 0.3;
+    transform: translateY(-50%) translateX(-70%);
+  }
+  
+  .show {
+    opacity: 1;
+  }
+  
+  /* Responsive styles */
+  @media screen and (max-width: 768px) {
+    .timer-container {
+      left: 10px;
+      padding: 10px;
+      min-width: 90px;
+    }
+    
+    .timer {
+      font-size: 22px;
+    }
+    
+    .limit-indicator {
+      font-size: 18px;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .timer-container {
+      left: 5px;
+      padding: 8px;
+      min-width: 80px;
+    }
+    
+    .timer {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+    
+    .limit-indicator {
+      font-size: 16px;
+    }
+    
+    .toggle-btn, .timer-btn {
+      font-size: 12px;
+      padding: 4px 8px;
+    }
+    
+    .limit-input {
+      width: 70px;
+      padding: 4px;
+    }
+  }
+  

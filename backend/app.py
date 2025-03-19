@@ -1,32 +1,44 @@
 import random
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+from word_database.firestore_setup import db
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 
-# Load words from file
-def load_words():
-    try:
-        with open('words.txt', 'r') as f:
-            return [word.strip().upper() for word in f.readlines() if len(word.strip()) == 5]
-    except FileNotFoundError:
-        # Default list if file not found
-        return ["WORLD", "PEACE", "HAPPY", "JUMPS", "PLAYS", "EARTH",
-                "PIANO", "BEACH", "KINGS", "QUEEN", "LAKES", "RIVER",
-                "TIGER", "MOUSE", "SNAKE", "CLOCK", "PHONE", "PLATE"]
+
+# Load words into memory (1 read per 500 words)
+def load_words_into_memory(collection_name):
+    collection_ref = db.collection(collection_name)
+    docs = list(collection_ref.stream())  # Fetch all words once
+    words = [doc.id for doc in docs]  # Store document IDs as words
+    return words
+
+# Store words in memory
+words = load_words_into_memory("5-letter-words")
+
+# Function to fetch a random word from memory
+def get_random_word():
+    if not words:
+        print("❌ No words in memory!")
+        return None
+    random_word = random.choice(words)
+    print(f"🎲 Random Word: {random_word}")
+    return random_word
 
 # Initialize words and select a random word
-words = load_words()
-current_word = random.choice(words)
+current_word = get_random_word()
 print(f"Current word: {current_word}")  # For debugging
+
+app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
 @app.route('/api/check', methods=['POST'])
 def check_guess():
     if not request.json or 'guess' not in request.json:
         return jsonify({"error": "Missing guess parameter"}), 400
     
-    guess = request.json['guess'].upper()
+    guess = request.json['guess'].lower()
     
     if len(guess) != 5:
         return jsonify({"error": "Guess must be 5 letters"}), 400
@@ -58,7 +70,7 @@ def check_guess():
 @app.route('/api/new-game', methods=['GET'])
 def new_game():
     global current_word
-    current_word = random.choice(words)
+    current_word = get_random_word()
     print(f"New game! Current word: {current_word}")  # For debugging
     return jsonify({"message": "New game started"})
 

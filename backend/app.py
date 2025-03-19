@@ -43,8 +43,7 @@ def check_guess():
     if len(guess) != 5:
         return jsonify({"error": "Guess must be 5 letters"}), 400
     
-    if guess not in words:
-        return jsonify({"error": "Not in word list"}), 400
+   
     
     result = []
     
